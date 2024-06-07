@@ -56,6 +56,9 @@ WHERE EXTRACT(YEAR_MONTH FROM date_create) = 202206;
 
 -- 7/ Récupérer le nom et le prix des produits du plus cher au moins cher
 
+SELECT name_product, price
+FROM product
+ORDER BY price DESC;
 
 
 -- 8/ Récupérer le nom et le prix des 5 produits les moins cher
