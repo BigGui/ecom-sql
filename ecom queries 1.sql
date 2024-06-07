@@ -91,7 +91,15 @@ WHERE name_product LIKE "wine%" ORDER BY price ASC LIMIT 1;
 
 -- 12/ Récupérer le nom et le prix des produits dont le prix est compris entre 15 et 20, classés par ordre alphabétique
 
+SELECT name_product, price
+FROM product
+WHERE price >= 15 AND price <=20
+ORDER BY name_product;
 
+SELECT name_product, price
+FROM product
+WHERE price BETWEEN 15 AND 20
+ORDER BY name_product;
 
 -- 13/ Récupérer le nom et le prix des vins dont le prix est compris entre 8 et 10
 
