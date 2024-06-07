@@ -84,6 +84,9 @@ WHERE name_product LIKE "wine%";
 
 -- 11/ Récupérer le nom et le prix du vin le moins cher
 
+SELECT name_product, price
+FROM product
+WHERE name_product LIKE "wine%" ORDER BY price ASC LIMIT 1;
 
 
 -- 12/ Récupérer le nom et le prix des produits dont le prix est compris entre 15 et 20, classés par ordre alphabétique
