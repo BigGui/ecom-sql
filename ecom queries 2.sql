@@ -1,7 +1,7 @@
 
 -- 1/ Récupérer le nombre de clients total dans la base de données
 
-
+SELECT COUNT(id_customer) AS nb_customers FROM customer;
 
 -- 2/ Récupérer le nombre de clients qui ont été créés chaque jour
 
