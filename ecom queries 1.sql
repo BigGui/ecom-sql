@@ -33,9 +33,26 @@ SELECT firstname, lastname, date_create
 FROM customer
 WHERE date_create < "2022-01-01 00:00:00";
 
+SELECT firstname, lastname, date_create
+FROM customer
+WHERE YEAR (date_create) < 2022;
 -- 6/ Récupérer toutes les données des clients dont l'ajout a été effectué en juin 2022
 
+SELECT *
+FROM customer
+WHERE date_create BETWEEN "2022-06-01" AND "2022-06-30";
 
+SELECT *
+FROM customer
+WHERE YEAR(date_create) = 2022 AND MONTH(date_create) = 6;
+
+SELECT *
+FROM customer
+WHERE date_create LIKE "2022-06%";
+
+SELECT * 
+FROM customer
+WHERE EXTRACT(YEAR_MONTH FROM date_create) = 202206;
 
 -- 7/ Récupérer le nom et le prix des produits du plus cher au moins cher
 
