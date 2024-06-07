@@ -70,7 +70,10 @@ LIMIT 5;
 
 -- 9/ Récupérer le nom des produits qui contiennent le mot "bread"
 
-
+SELECT name_product
+FROM product
+WHERE name_product
+LIKE "%bread%";
 
 -- 10/ Récupérer le nom des produits qui commencent par le mot "wine"
 
