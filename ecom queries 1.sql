@@ -24,8 +24,7 @@ WHERE id_customer = 15;
 -- 4/ Récupérer les adresses email des clients numéro 20, 34, 50, 69 et 88.
 SELECT `email` 
 FROM `customer` 
-WHERE `id_customer`
-IN (20, 34, 50, 69, 88);
+WHERE `id_customer` IN (20, 34, 50, 69, 88);
 
 
 -- 5/ Récupérer les noms et prénoms des clients dont l'ajout a été effectué avant 2022
