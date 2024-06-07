@@ -76,6 +76,9 @@ WHERE name_product
 LIKE "%bread%";
 
 -- 10/ Récupérer le nom des produits qui commencent par le mot "wine"
+SELECT name_product
+FROM product
+WHERE name_product LIKE "wine%";
 
 
 
