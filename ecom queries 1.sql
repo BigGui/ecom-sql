@@ -156,4 +156,19 @@ WHERE ref_product = 42;
 
 -- 20/ Créer la requête permettant d'augmenter de 10% le prix de tous les fromages.
 
+SELECT name_product, price
+FROM product
+WHERE name_product
+LIKE "cheese%";
 
+UPDATE product
+SET price = price * 1.10
+WHERE name_product
+LIKE "cheese%";
+
+
+-- Truncate to superior decimal
+UPDATE product
+SET price = ROUND(price * 1.10, 2)
+WHERE name_product
+LIKE "cheese%";
