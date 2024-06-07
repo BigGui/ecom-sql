@@ -131,7 +131,10 @@ WHERE email LIKE "%google.com";
 
 -- 17/ Récupérer le numéro et la date de la dernière commande du client numéro 42
 
-
+SELECT id_order, date_order
+FROM orders
+WHERE id_customer = 42
+ORDER BY date_order DESC LIMIT 1;
 
 -- 18/ Modifier l'adresse email du client numéro 15 par emilymcgrail@yahoo.com"
 
