@@ -136,8 +136,14 @@ FROM orders
 WHERE id_customer = 42
 ORDER BY date_order DESC LIMIT 1;
 
--- 18/ Modifier l'adresse email du client numéro 15 par emilymcgrail@yahoo.com"
+-- 18/ Modifier l'adresse email du client numéro 15 par "emilymcgrail@yahoo.com"
+SELECT *
+FROM customer
+WHERE id_customer = 15;
 
+UPDATE customer
+SET email = "emilymcgrail@yahoo.com"
+WHERE id_customer = 15;
 
 
 -- 19/ Créer la requête permettant de mette à jour le prix du produit ayant la référence 42 à 10.20 €
