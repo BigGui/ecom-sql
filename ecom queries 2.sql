@@ -1,11 +1,15 @@
 
 -- 1/ Récupérer le nombre de clients total dans la base de données
 
-SELECT COUNT(id_customer) AS nb_customers FROM customer;
+SELECT COUNT(id_customer) AS nb_customers 
+FROM customer;
 
 -- 2/ Récupérer le nombre de clients qui ont été créés chaque jour
 
-
+SELECT  date_create, COUNT(DISTINCT id_customer) AS nb_customers
+FROM customer
+GROUP BY date_create
+ORDER BY date_create;
 
 -- 3/ Récupérer le prix du produit le plus bas
 
