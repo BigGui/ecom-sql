@@ -29,7 +29,9 @@ WHERE `id_customer` IN (20, 34, 50, 69, 88);
 
 -- 5/ Récupérer les noms et prénoms des clients dont l'ajout a été effectué avant 2022
 
-
+SELECT firstname, lastname, date_create
+FROM customer
+WHERE date_create < "2022-01-01 00:00:00";
 
 -- 6/ Récupérer toutes les données des clients dont l'ajout a été effectué en juin 2022
 
