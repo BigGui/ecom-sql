@@ -63,7 +63,10 @@ ORDER BY price DESC;
 
 -- 8/ Récupérer le nom et le prix des 5 produits les moins cher
 
-
+SELECT name_product, price
+FROM product
+ORDER BY price ASC
+LIMIT 5;
 
 -- 9/ Récupérer le nom des produits qui contiennent le mot "bread"
 
