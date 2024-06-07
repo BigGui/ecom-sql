@@ -11,7 +11,9 @@ WHERE firstname = "Ramsay";
 
 -- 2/ Récupérer les noms et prénoms des clients par ordre alphabétique
 
-
+SELECT lastname, firstname
+FROM customer
+ORDER BY lastname ASC, firstname ASC;
 
 -- 3/ Récupérer les noms, prénoms et email du client numéro 15
 
