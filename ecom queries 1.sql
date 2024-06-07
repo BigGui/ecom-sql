@@ -103,7 +103,10 @@ ORDER BY name_product;
 
 -- 13/ Récupérer le nom et le prix des vins dont le prix est compris entre 8 et 10
 
-
+SELECT name_product, price
+FROM product
+WHERE name_product LIKE "wine%" 
+AND price BETWEEN 8 AND 10;
 
 -- 14/ Récupérer le numéro et la date des commandes passées au mois de mai 2022
 
