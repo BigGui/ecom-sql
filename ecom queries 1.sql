@@ -110,7 +110,9 @@ AND price BETWEEN 8 AND 10;
 
 -- 14/ Récupérer le numéro et la date des commandes passées au mois de mai 2022
 
-
+SELECT id_order, date_order
+FROM orders
+WHERE EXTRACT(YEAR_MONTH FROM date_order) = 202205;
 
 -- 15/ Récupérer le numéro et la date des commandes passées par le client numéro 59 en 2022, classées par date croissante. 
 
