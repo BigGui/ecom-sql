@@ -116,11 +116,18 @@ WHERE EXTRACT(YEAR_MONTH FROM date_order) = 202205;
 
 -- 15/ Récupérer le numéro et la date des commandes passées par le client numéro 59 en 2022, classées par date croissante. 
 
+SELECT id_order, date_order
+FROM orders
+WHERE YEAR(date_order) = 2022 AND id_customer = 59
+ORDER BY date_order ASC;
+
 
 
 -- 16/ Récupérer le prénom et le nom des clients dont le fournisseur de l'adresse email est "google.com"
 
-
+SELECT  firstname, lastname
+FROM customer
+WHERE email LIKE "%google.com";
 
 -- 17/ Récupérer le numéro et la date de la dernière commande du client numéro 42
 
