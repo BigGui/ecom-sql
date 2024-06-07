@@ -145,10 +145,14 @@ UPDATE customer
 SET email = "emilymcgrail@yahoo.com"
 WHERE id_customer = 15;
 
-
 -- 19/ Créer la requête permettant de mette à jour le prix du produit ayant la référence 42 à 10.20 €
+SELECT *
+FROM product
+WHERE ref_product = 42;
 
-
+UPDATE product
+SET price = 10.20
+WHERE ref_product = 42;
 
 -- 20/ Créer la requête permettant d'augmenter de 10% le prix de tous les fromages.
 
