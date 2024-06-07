@@ -34,7 +34,10 @@ LIMIT 1;
 -- 5/ Récupérer le numéro des clients ayant commandé avec la date de leur dernière commande,
 -- classés par cette date de dernière commande décroissant
 
-
+SELECT id_customer, MAX(date_order) AS last_order
+FROM orders
+GROUP BY id_customer
+ORDER BY last_order DESC;
 
 -- 6/ Récupérer la liste des jours de commande par ordre décroissant avec pour chaque jour le nombre de commandes passées
 
