@@ -104,7 +104,11 @@ HAVING nb_order >= 3;
 
 -- 13/ Récupérer les références des produits dont il a déjà été vendu plus de 20 exemplaires, triés par nombre d'exemplaires vendus décroissant
 
-
+SELECT ref_product, SUM(quantity) AS quantity_sold
+FROM product_order
+GROUP BY ref_product
+HAVING quantity_sold > 20
+ORDER BY quantity_sold DESC;
 
 -- 14/ Récupérer la référence et le chiffre d'affaire du produit qui a généré le plus de chiffre d'affaire
 
