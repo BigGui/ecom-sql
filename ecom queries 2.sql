@@ -48,7 +48,9 @@ ORDER BY date_order DESC;
 
 -- 7/ Récupérer les identifiants des commandes et pour chacune le nombre total de produits achetés
 
-
+SELECT id_order, SUM(quantity) AS sum_quantity_bought
+FROM product_order
+GROUP BY id_order;
 
 -- 8/ Récupérer le nombre de comptes clients créés pour chaque année
 
