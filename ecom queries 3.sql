@@ -50,7 +50,11 @@ ORDER BY date_order DESC;
 
 -- 7/ Récupérer le nom et la quantité vendues pour chaque vin dont au moins 10 bouteilles ont été vendues
 
-
+SELECT name_product, SUM(quantity) AS total_qty
+FROM product JOIN product_order USING (ref_product)
+WHERE name_product like "wine%" 
+GROUP BY ref_product
+HAVING total_qty >=10;
 
 -- 8/ Récupérer le nom et le total de chiffre d'affaire de tous les produits (0.00 si le produit n'a pas été vendu)
 
