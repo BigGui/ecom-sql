@@ -68,3 +68,5 @@
 -- (moyenne du total des commandes de la période)
 
 
+
+-- BONUS.17/ Récupérer les emails des clients qui ont achetés en 2021 le produit "Cheese - Brie, Triple Creme" à moins de 80% de son prix actuel
