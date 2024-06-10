@@ -1,7 +1,11 @@
 
 -- 1/ Récupérer le numéro, la date et l'email du client des commandes passées en 2021, ordonnées par date
 
-
+SELECT id_order, date_order, email
+FROM customer c
+    JOIN orders o USING(id_customer)
+WHERE YEAR(date_order) = 2021
+ORDER BY date_order;
 
 -- 2/ Récupérer le nom, le prénom et l'email des clients n'ayant jamais passé de commande
 
