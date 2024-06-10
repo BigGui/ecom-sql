@@ -111,6 +111,14 @@ HAVING quantity_sold > 20
 ORDER BY quantity_sold DESC;
 
 -- 14/ Récupérer la référence et le chiffre d'affaire du produit qui a généré le plus de chiffre d'affaire
+SELECT ref_product, SUM(price_order * quantity) AS total_price
+FROM product_order
+GROUP BY ref_product
+ORDER BY total_price DESC
+LIMIT 1;
+
+
+
 
 
 -- BONUS.15/ Récupérer les identifiants des clients ayant passés au moins 3 commandes en 2022
