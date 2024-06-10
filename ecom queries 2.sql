@@ -41,7 +41,10 @@ ORDER BY last_order DESC;
 
 -- 6/ Récupérer la liste des jours de commande par ordre décroissant avec pour chaque jour le nombre de commandes passées
 
-
+SELECT date_order, COUNT(id_order) AS nb_order
+FROM orders
+GROUP BY date_order
+ORDER BY date_order DESC;
 
 -- 7/ Récupérer les identifiants des commandes et pour chacune le nombre total de produits achetés
 
