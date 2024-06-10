@@ -127,6 +127,15 @@ HAVING COUNT(id_order) >= 3;
 
 -- BONUS.16/ Récupérer les identifiants des produits dont le prix a varié de plus 8 € dans l'historique des ventes 
 
+SELECT ref_product, MAX(price_order) AS max_price, MIN(price_order) AS min_price
+FROM product_order
+GROUP BY ref_product
+HAVING max_price - min_price > 8;
 
 
 -- BONUS.17/ Récupérer l'identifiant des produits dont le prix de vente moyen est supérieur à 20€ et dont au moins 15 exemplaires ont déjà été vendus 
+
+SELECT ref_product, AVG(price_order) AS average_price, SUM(quantity) AS total_qty
+FROM product_order
+GROUP BY ref_product
+HAVING average_price > 20 AND total_qty >= 15;
