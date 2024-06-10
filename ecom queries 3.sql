@@ -9,6 +9,11 @@ ORDER BY date_order;
 
 -- 2/ Récupérer le nom, le prénom et l'email des clients n'ayant jamais passé de commande
 
+SELECT firstname, lastname, email
+FROM customer
+    LEFT JOIN orders USING (id_customer)
+WHERE id_order IS NULL;
+
 
 
 -- 3/ Récupérer pour la commande numéro 15 pour chaque produit acheté : son nom, la quantité achetée, le prix d'achat unitaire et le prix total de la ligne
