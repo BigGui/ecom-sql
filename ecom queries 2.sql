@@ -74,3 +74,10 @@ ORDER BY last_order DESC;
 -- 14/ Récupérer la référence et le chiffre d'affaire du produit qui a généré le plus de chiffre d'affaire
 
 
+-- BONUS.15/ Récupérer les identifiants des clients ayant passés au moins 3 commandes en 2022
+
+
+-- BONUS.16/ Récupérer l'identifiant du produit ayant généré le plus de chiffre d'affaire
+
+
+-- BONUS.17/ Récupérer l'identifiant des produits dont le prix de vente moyen est supérieur à 20€ et dont au moins 15 exemplaires ont déjà vendus 
