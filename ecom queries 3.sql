@@ -25,7 +25,10 @@ WHERE id_order = 15;
 
 -- 4/ Récupérer le nom et le prix des produits qui n'ont jamais été vendus
 
-
+SELECT name_product, price
+FROM product
+   LEFT JOIN product_order USING (ref_product)
+WHERE id_order IS NULL;
 
 -- 5/ Récupérer le numéro, la date et le montant total des commandes d'avril 2022
 
