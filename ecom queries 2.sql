@@ -77,7 +77,7 @@ ORDER BY last_order DESC;
 -- BONUS.15/ Récupérer les identifiants des clients ayant passés au moins 3 commandes en 2022
 
 
--- BONUS.16/ Récupérer les identifiants des produits dont le rpix à varié de plus 8 € dans l'historique des ventes 
+-- BONUS.16/ Récupérer les identifiants des produits dont le prix a varié de plus 8 € dans l'historique des ventes 
 
 
 -- BONUS.17/ Récupérer l'identifiant des produits dont le prix de vente moyen est supérieur à 20€ et dont au moins 15 exemplaires ont déjà été vendus 
