@@ -61,7 +61,9 @@ GROUP BY YEAR(date_create);
 
 -- 9/ Récupérer le montant total de la commande numéro 12
 
-
+SELECT SUM(price_order * quantity) AS total_price
+FROM product_order
+WHERE id_order = 12;
 
 -- 10/ Récupérer les identifiants des commandes et pour chacune le montant total payé par le client
 
