@@ -18,7 +18,10 @@ WHERE id_order IS NULL;
 
 -- 3/ Récupérer pour la commande numéro 15 pour chaque produit acheté : son nom, la quantité achetée, le prix d'achat unitaire et le prix total de la ligne
 
-
+SELECT name_product, quantity, price_order, quantity * price_order AS total_price
+FROM product
+    JOIN product_order USING (ref_product)
+WHERE id_order = 15;
 
 -- 4/ Récupérer le nom et le prix des produits qui n'ont jamais été vendus
 
