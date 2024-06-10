@@ -117,14 +117,16 @@ GROUP BY ref_product
 ORDER BY total_price DESC
 LIMIT 1;
 
-
-
-
-
 -- BONUS.15/ Récupérer les identifiants des clients ayant passés au moins 3 commandes en 2022
 
+SELECT id_customer
+FROM orders
+WHERE YEAR(date_order) = 2022
+GROUP BY id_customer
+HAVING COUNT(id_order) >= 3;
 
 -- BONUS.16/ Récupérer les identifiants des produits dont le prix a varié de plus 8 € dans l'historique des ventes 
+
 
 
 -- BONUS.17/ Récupérer l'identifiant des produits dont le prix de vente moyen est supérieur à 20€ et dont au moins 15 exemplaires ont déjà été vendus 
