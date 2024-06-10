@@ -97,7 +97,10 @@ ORDER BY ym;
 
 -- 12/ Récupérer les identifiants des clients ayant passées au moins 3 commandes
 
-
+SELECT id_customer, COUNT(id_order) AS nb_order
+FROM orders
+GROUP BY id_customer
+HAVING nb_order >= 3;
 
 -- 13/ Récupérer les références des produits dont il a déjà été vendu plus de 20 exemplaires, triés par nombre d'exemplaires vendus décroissant
 
