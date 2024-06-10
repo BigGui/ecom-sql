@@ -41,7 +41,12 @@ GROUP BY o.id_order;
 -- 6/ Récupérer l'historique des commandes par ordre décroissant pour le client numéro 14
 -- en affichant le montant total de chaque commande
 
-
+SELECT id_order, date_order, SUM(quantity*price_order) AS total
+FROM orders
+    JOIN product_order USING(id_order)
+WHERE id_customer = 14
+GROUP BY id_order
+ORDER BY date_order DESC;
 
 -- 7/ Récupérer le nom et la quantité vendues pour chaque vin dont au moins 10 bouteilles ont été vendues
 
