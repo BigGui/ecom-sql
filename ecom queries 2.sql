@@ -54,6 +54,9 @@ GROUP BY id_order;
 
 -- 8/ Récupérer le nombre de comptes clients créés pour chaque année
 
+SELECT YEAR(date_create) as year_create, COUNT(id_customer) AS create_customer_by_year
+FROM customer
+GROUP BY YEAR(date_create);
 
 
 -- 9/ Récupérer le montant total de la commande numéro 12
