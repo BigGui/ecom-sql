@@ -101,3 +101,8 @@ GROUP BY ref_product;
 
 
 -- BONUS.17/ Récupérer les emails des clients qui ont achetés en 2021 le produit "Cheese - Brie, Triple Creme" à moins de 80% de son prix actuel
+
+
+-- BONUS.18/ Quel produit Shawna Knowller a acheté le plus souvent ?
+
+-- BONUS.19/ Récupérer la liste les clients (nom et prénom) ayant acheté plusieurs fois le même produit, ainsi que le nom des produits concernés.
