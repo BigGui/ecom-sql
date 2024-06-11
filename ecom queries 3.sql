@@ -158,6 +158,14 @@ ORDER BY dates ASC;
 
 -- BONUS.17/ Récupérer les emails des clients qui ont achetés en 2021 le produit "Cheese - Brie, Triple Creme" à moins de 80% de son prix actuel
 
+SELECT email
+FROM customer
+    JOIN orders USING(id_customer)
+    JOIN product_order USING(id_order)
+    JOIN product USING (ref_product)
+WHERE name_product = "Cheese - Brie, Triple Creme" 
+    AND price > price_order * 0.8 
+    AND YEAR(date_order) = 2021;
 
 -- BONUS.18/ Quel produit Shawna Knowller a acheté le plus souvent ?
 
