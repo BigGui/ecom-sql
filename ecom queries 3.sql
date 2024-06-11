@@ -108,7 +108,10 @@ LIMIT 1;
 -- 13/ Récupérer les emails de tous les clients et aussi leur dernière date de commande
 -- s'ils ont déjà passé commande
 
-
+SELECT email, MAX(date_order) AS last_order_date
+FROM customer
+    LEFT JOIN orders USING (id_customer)
+GROUP BY id_customer;
 
 -- 14/ Récupérer l'historique des chiffres d'affaire mensuels des ventes de fromage
 
