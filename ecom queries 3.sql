@@ -137,7 +137,13 @@ ORDER BY date_;
 -- 15/ Récupérer le nom et le chiffre d'affaire total de décembre 2021
 -- des produits ayant généré plus 100 € de chiffre d'affaire sur ce mois.
 
-
+SELECT name_product, SUM(quantity * price_order) AS total_revenue
+FROM product
+    JOIN product_order USING(ref_product)
+    JOIN orders USING(id_order)
+WHERE DATE_FORMAT(date_order, "%Y-%m") = '2021-12'
+GROUP BY ref_product
+HAVING total_revenue > 100;
 
 -- 16/ Récupérer pour chaque mois la valeur du panier moyen
 -- (moyenne du total des commandes de la période)
