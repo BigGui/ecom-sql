@@ -85,7 +85,13 @@ GROUP BY id_order;
 
 -- 11/ Récupérer l'adresse email des clients ayant effectués plus de 300 euros de commande au total en 2021
 
-
+SELECT email, SUM(quantity * price_order) AS total_cmd
+FROM customer
+    JOIN orders USING(id_customer)
+    JOIN product_order USING(id_order)
+WHERE YEAR(date_order) = 2021
+GROUP BY id_customer
+HAVING total_cmd > 300;
 
 -- 12/ Récupérer le nom et le prénom du plus gros acheteur de vin en quantité
 
