@@ -148,7 +148,13 @@ HAVING total_revenue > 100;
 -- 16/ Récupérer pour chaque mois la valeur du panier moyen
 -- (moyenne du total des commandes de la période)
 
-
+SELECT 
+    DATE_FORMAT(date_order, "%Y-%m") AS dates, 
+    ROUND(SUM(price_order * quantity) / COUNT(DISTINCT id_order), 2) AS average
+FROM orders
+    JOIN product_order USING (id_order)
+GROUP BY dates
+ORDER BY dates ASC;
 
 -- BONUS.17/ Récupérer les emails des clients qui ont achetés en 2021 le produit "Cheese - Brie, Triple Creme" à moins de 80% de son prix actuel
 
