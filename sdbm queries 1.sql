@@ -36,6 +36,10 @@ ORDER BY total_qty DESC;
 
 -- 5/ Afficher la moyenne des prix d'achat des articles par type, en indiquant le nom du type et la moyenne des prix d'achat.
 
+SELECT type_name, ROUND(AVG(purchase_price), 2) AS average
+FROM type
+    JOIN article USING (id_type)
+GROUP BY id_type;
 
 -- 6/ Afficher la somme des quantités vendues pour chaque couleur de bière, en affichant le nom de la couleur et la somme des quantités.
 
