@@ -180,4 +180,12 @@ GROUP BY ref_product
 ORDER BY COUNT(id_order) DESC
 LIMIT 1;
 
--- BONUS.19/ Récupérer la liste les clients (nom et prénom) ayant acheté plusieurs fois le même produit, ainsi que le nom des produits concernés.
+-- BONUS.19/ Récupérer la liste des clients (nom et prénom) ayant acheté plusieurs fois le même produit, ainsi que le nom des produits concernés.
+
+SELECT firstname, lastname, name_product
+FROM customer
+    JOIN orders USING (id_customer)
+    JOIN product_order USING (id_order)
+    JOIN product USING (ref_product)
+GROUP BY id_customer, ref_product
+HAVING COUNT(id_order) > 1;
