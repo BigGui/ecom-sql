@@ -76,6 +76,11 @@ HAVING price < min_price;
 -- 10/ Récupérer pour toutes les commandes passées le 27 novembre 2021,
 -- le nom, le prénom, l'email du client et le montant total
 
+SELECT id_order, lastname, firstname, email, SUM(quantity*price_order) AS total_price
+FROM customer join orders USING(id_customer)
+JOIN product_order USING (id_order)
+WHERE DATE_FORMAT(date_order, '%Y-%m-%d') = "2021-11-27"
+GROUP BY id_order;
 
 
 -- 11/ Récupérer l'adresse email des clients ayant effectués plus de 300 euros de commande au total en 2021
