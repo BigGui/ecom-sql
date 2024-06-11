@@ -6,10 +6,22 @@ SELECT article_name,purchase_price, SUM(quantity) as quantity_total
   GROUP BY id_article;
 
 -- 2/ Afficher le nombre de bières vendues par pays, en affichant le nom du pays.
+SELECT country_name, COUNT(id_article) as quantity_total
+FROM country    
+    JOIN brand USING(id_country)
+    JOIN article USING(id_brand)
+GROUP BY id_country
+ORDER BY quantity_total DESC;
+
 
 
 -- 3/ Afficher la quantité totale de bières vendues par marque, avec le nom de chaque marque, triée par ordre décroissant.
-
+SELECT SUM(quantity) AS total_qty, brand_name
+FROM sale
+    JOIN article USING (id_article)
+    JOIN brand USING (id_brand)
+GROUP BY id_brand
+ORDER BY total_qty DESC;
 
 -- 4/ Afficher la quantité totale de bières vendues par continent, en affichant le nom du continent.
 
