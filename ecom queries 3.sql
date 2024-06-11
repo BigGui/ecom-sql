@@ -115,7 +115,24 @@ GROUP BY id_customer;
 
 -- 14/ Récupérer l'historique des chiffres d'affaire mensuels des ventes de fromage
 
-
+SELECT YEAR(date_order) AS years,
+        MONTH(date_order) AS months, 
+        SUM(quantity*price_order) AS total
+FROM product_order
+    JOIN orders USING(id_order)
+    JOIN product USING(ref_product)
+WHERE name_product LIKE "%cheese%"
+GROUP BY years, months
+ORDER BY years, months;
+-- Another possibility:
+SELECT DATE_FORMAT(date_order, "%Y-%m") AS date_,
+SUM(quantity*price_order) AS total
+FROM product_order
+    JOIN orders USING(id_order)
+    JOIN product USING(ref_product)
+WHERE name_product LIKE "%cheese%"
+GROUP BY date_
+ORDER BY date_;
 
 -- 15/ Récupérer le nom et le chiffre d'affaire total de décembre 2021
 -- des produits ayant généré plus 100 € de chiffre d'affaire sur ce mois.
