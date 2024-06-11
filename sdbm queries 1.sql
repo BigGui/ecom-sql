@@ -1,5 +1,9 @@
 -- 1/ Afficher la liste des articles avec leur nom, prix d'achat et quantité totale vendue (en nombre de bière).
 
+SELECT article_name,purchase_price, SUM(quantity) as quantity_total
+ From article
+  JOIN sale USING (id_article)
+  GROUP BY id_article;
 
 -- 2/ Afficher le nombre de bières vendues par pays, en affichant le nom du pays.
 
