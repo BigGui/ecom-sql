@@ -165,8 +165,19 @@ FROM customer
     JOIN product USING (ref_product)
 WHERE name_product = "Cheese - Brie, Triple Creme" 
     AND price > price_order * 0.8 
-    AND YEAR(date_order) = 2021;
+    AND YEAR(date_order) = 2021
+    GROUP BY id_customer;
 
 -- BONUS.18/ Quel produit Shawna Knowller a acheté le plus souvent ?
+
+SELECT name_product
+FROM customer
+    JOIN orders USING(id_customer)
+    JOIN product_order USING(id_order)
+    JOIN product USING (ref_product)
+WHERE firstname = "Shawna" AND lastname = "Knowller"
+GROUP BY ref_product
+ORDER BY COUNT(id_order) DESC
+LIMIT 1;
 
 -- BONUS.19/ Récupérer la liste les clients (nom et prénom) ayant acheté plusieurs fois le même produit, ainsi que le nom des produits concernés.
