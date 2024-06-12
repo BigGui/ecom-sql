@@ -14,14 +14,59 @@ WHERE (id_color, id_type) = (
 
 -- 2/ Lister les quantités vendues de chaque article pour les années 2014, 2015,2016 et 2017.
 
-SELECT id_article, Year(ticket_date) AS year_, SUM(quantity) AS sold_quantity
+SELECT id_article, YEAR(ticket_date) AS year_, SUM(quantity) AS sold_quantity
 FROM sale
     JOIN ticket USING (id_ticket)
-WHERE Year(ticket_date) IN (2014, 2015, 2016, 2017)
+WHERE YEAR(ticket_date) IN (2014, 2015, 2016, 2017)
 GROUP BY id_article, year_
 ORDER BY id_article, year_;
 
+SELECT SUM(quantity) AS sold_quantity
+FROM sale
+    JOIN ticket USING (id_ticket)
+WHERE YEAR(ticket_date) = 2014 AND id_article = 1;
+
+SELECT id_article, article_name,
+    (
+        SELECT SUM(quantity) AS sold_quantity
+        FROM sale
+            JOIN ticket USING (id_ticket)
+        WHERE YEAR(ticket_date) = 2014
+            AND id_article = a.id_article
+    ) AS sold_2014,
+    (
+        SELECT SUM(quantity) AS sold_quantity
+        FROM sale
+            JOIN ticket USING (id_ticket)
+        WHERE YEAR(ticket_date) = 2015
+            AND id_article = a.id_article
+    ) AS sold_2015,
+    (
+        SELECT SUM(quantity) AS sold_quantity
+        FROM sale
+            JOIN ticket USING (id_ticket)
+        WHERE YEAR(ticket_date) = 2016
+            AND id_article = a.id_article
+    ) AS sold_2016,
+    (
+        SELECT SUM(quantity) AS sold_quantity
+        FROM sale
+            JOIN ticket USING (id_ticket)
+        WHERE YEAR(ticket_date) = 2017
+            AND id_article = a.id_article
+    ) AS sold_2017
+FROM article a
+ORDER BY id_article;
+
 -- 3/ Lister les tickets sur lesquels apparaissent un des articles apparaissant aussi sur le ticket 20175123.
+
+SELECT id_ticket 
+FROM sale 
+WHERE id_article IN 
+(SELECT id_article
+ FROM sale 
+ WHERE id_ticket = 20175123);
+
 
 
 -- 4/ Donner pour chaque Type de bière, la bière la plus vendue en 2017. (Classer par quantité décroissante)
