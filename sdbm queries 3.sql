@@ -62,11 +62,20 @@ ORDER BY id_article;
 
 SELECT id_ticket 
 FROM sale 
-WHERE id_article IN 
-(SELECT id_article
- FROM sale 
- WHERE id_ticket = 20175123);
+WHERE id_article IN (
+    SELECT id_article
+    FROM sale 
+    WHERE id_ticket = 20175123
+ );
 
+SELECT id_ticket 
+FROM sale s 
+WHERE EXISTS (
+    SELECT id_article
+    FROM sale 
+    WHERE id_ticket = 20175123
+        AND id_article = s.id_article
+ );
 
 
 -- 4/ Donner pour chaque Type de bière, la bière la plus vendue en 2017. (Classer par quantité décroissante)
