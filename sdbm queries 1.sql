@@ -43,6 +43,11 @@ GROUP BY id_type;
 
 -- 6/ Afficher la somme des quantités vendues pour chaque couleur de bière, en affichant le nom de la couleur et la somme des quantités.
 
+SELECT color_name, SUM(quantity) AS total_quantity
+FROM color
+    JOIN article USING (id_color)
+    JOIN sale USING (id_article)
+GROUP BY id_color;
 
 -- 7/ Afficher le volume total des ventes réalisées pour chaque marque, trié par ordre décroissant.
 
