@@ -34,13 +34,14 @@ FROM sale s
     JOIN article USING (id_article)
     JOIN brand USING (id_brand)
     JOIN country USING (id_country)
-WHERE country_name = 'allemagne' AND id_ticket IN (
+WHERE country_name = 'allemagne' AND EXISTS (
     SELECT id_ticket
     FROM sale
         JOIN article USING (id_article)
         JOIN brand USING (id_brand)
         JOIN country USING (id_country)
-    WHERE country_name = 'france' 
+    WHERE country_name = 'france' AND
+    id_ticket = s.id_ticket
     GROUP BY id_ticket
 )
 GROUP BY id_article
