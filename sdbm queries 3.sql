@@ -80,6 +80,66 @@ WHERE EXISTS (
 
 -- 4/ Donner pour chaque Type de bière, la bière la plus vendue en 2017. (Classer par quantité décroissante)
 
+SELECT type_name, article_name, SUM(quantity) AS total
+FROM article
+    JOIN type USING (id_type)
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+WHERE id_type = 1 AND YEAR(ticket_date) = 2017
+GROUP BY id_article
+ORDER BY SUM(quantity) DESC
+LIMIT 1;
+
+SELECT id_type AS type_id ,type_name, article_name, SUM(quantity) AS total
+FROM article
+    JOIN type t USING (id_type)
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+WHERE YEAR(ticket_date) = 2017
+GROUP BY id_article
+HAVING total = (
+    SELECT SUM(quantity) AS total
+    FROM article
+            JOIN type USING (id_type)
+            JOIN sale USING (id_article)
+            JOIN ticket USING (id_ticket)
+    WHERE id_type = type_id AND YEAR(ticket_date) = 2017
+    GROUP BY id_article
+    ORDER BY total DESC
+    LIMIT 1)
+ORDER BY total DESC;
+
+
+SELECT id_type AS type_id ,type_name, article_name, SUM(quantity) AS total
+FROM article
+    JOIN type t USING (id_type)
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+WHERE YEAR(ticket_date) = 2017
+GROUP BY id_article
+HAVING total >= ALL (
+    SELECT SUM(quantity) AS total
+    FROM article
+            JOIN type USING (id_type)
+            JOIN sale USING (id_article)
+            JOIN ticket USING (id_ticket)
+    WHERE id_type = type_id AND YEAR(ticket_date) = 2017
+    GROUP BY id_article
+)
+ORDER BY total DESC;
+
+
+SELECT MAX(total)
+FROM (
+    SELECT SUM(quantity) AS total
+    FROM article
+            JOIN type USING (id_type)
+            JOIN sale USING (id_article)
+            JOIN ticket USING (id_ticket)
+    WHERE id_type = 1 AND YEAR(ticket_date) = 2017
+    GROUP BY id_article
+) AS type_2017;
+
 
 -- 5/ Donner la liste des bières qui n'ont pas été vendues en 2014 ni en 2015. (Id, nom et volume)
 
