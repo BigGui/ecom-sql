@@ -48,7 +48,20 @@ GROUP BY id_article
 ORDER BY article_name;
 
 -- 4/ Récupérer la liste des bières pour lequelles les ventes ont agumentées entre 2015 et 2016
-
+SELECT article_name, total_2015.total AS total2015, total_2016.total AS total2016
+FROM article
+    JOIN (
+        SELECT id_article, SUM(quantity) AS total
+        FROM sale
+            JOIN ticket USING (id_ticket)
+        WHERE YEAR(ticket_date) = 2015
+        GROUP BY id_article) AS total_2015 USING (id_article)
+    JOIN (SELECT id_article, SUM(quantity) AS total
+        FROM sale
+            JOIN ticket USING (id_ticket)
+        WHERE YEAR(ticket_date) = 2016
+        GROUP BY id_article) AS total_2016 USING (id_article)
+WHERE total_2016.total > total_2015.total
 
 
 -- 5/ Récupérer les bières pour lesquelles le volume de bières
