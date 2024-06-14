@@ -29,6 +29,22 @@ ORDER BY month_, type_name;
 -- 3/ Récupérer le nom et le volume des bières allemandes achetées en même temps que des bières françaises
 -- classés par nom de bière
 
+SELECT id_article, article_name, volume
+FROM sale s
+    JOIN article USING (id_article)
+    JOIN brand USING (id_brand)
+    JOIN country USING (id_country)
+WHERE country_name = 'allemagne' AND id_ticket IN (
+    SELECT id_ticket
+    FROM sale
+        JOIN article USING (id_article)
+        JOIN brand USING (id_brand)
+        JOIN country USING (id_country)
+    WHERE country_name = 'france' 
+    GROUP BY id_ticket
+)
+GROUP BY id_article
+ORDER BY article_name;
 
 -- 4/ Récupérer la liste des bières pour lequelles les ventes ont agumentées entre 2015 et 2016
 
