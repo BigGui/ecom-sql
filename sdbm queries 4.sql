@@ -1,10 +1,30 @@
 -- 1/ Récupérer toutes les bières les plus alcoolisés de chaque continent
 -- afficher le nom du contient , le nom de la bière, le degrès d'alcool et le volume 
 
+SELECT article_name, alcohol, continent_name, volume
+FROM article
+    JOIN brand USING(id_brand)
+    JOIN country USING(id_country)
+    JOIN continent c USING(id_continent)
+WHERE alcohol = (
+    SELECT MAX(alcohol)
+    FROM article
+        JOIN brand USING(id_brand)
+        JOIN country USING(id_country)
+        JOIN continent USING(id_continent)
+    WHERE id_continent = c.id_continent
+);
+
 
 -- 2/ Récupérer le volume de bières vendu pour chaque mois et pour chaque type de bière
 -- classés par années, mois et type de bière
 
+SELECT DATE_FORMAT(ticket_date, '%Y-%m') AS month_, type_name, SUM(volume * quantity)/100 AS sum
+FROM article join type USING (id_type) 
+JOIN sale USING(id_article) 
+JOIN ticket USING(id_ticket)
+GROUP BY id_type, month_
+ORDER BY month_, type_name;
 
 -- 3/ Récupérer le nom et le volume des bières allemandes achetées en même temps que des bières françaises
 -- classés par nom de bière
