@@ -126,11 +126,42 @@ HAVING average_alcohol >= ALL (
     SELECT AVG(alcohol)
     FROM brand
         JOIN article USING (id_brand)
-        WHERE id_country = id_country1
+    WHERE id_country = id_country1
     GROUP BY id_brand
 );
 
 
+SELECT id_country AS id_country1, country_name, brand_name, AVG(alcohol) AS average_alcohol
+FROM country
+    JOIN brand USING (id_country)
+    JOIN article USING (id_brand)
+GROUP BY id_brand
+HAVING average_alcohol = (
+    SELECT MAX(avg) 
+    FROM (
+        SELECT AVG(alcohol) AS avg
+        FROM brand
+            JOIN article USING (id_brand)
+        WHERE id_country = id_country1
+        GROUP BY id_brand
+    ) AS avg_alcohol_brand
+);
+
+
+SELECT id_country AS id_country1, country_name, brand_name, AVG(alcohol) AS average_alcohol
+FROM country
+    JOIN brand USING (id_country)
+    JOIN article USING (id_brand)
+GROUP BY id_brand
+HAVING average_alcohol = (
+    SELECT AVG(alcohol) AS avg
+    FROM brand 
+        JOIN article USING (id_brand)
+    WHERE id_country = id_country1
+    GROUP BY id_brand
+    ORDER BY avg DESC
+    LIMIT 1
+);
 
 
 -- 7/ Donner pour chaque type de bière, la bière la plus vendue et la bière la moins vendue en 2016
