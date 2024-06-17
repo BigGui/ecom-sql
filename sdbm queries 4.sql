@@ -67,7 +67,53 @@ WHERE total_2016.total > total_2015.total
 -- 5/ Récupérer les bières pour lesquelles le volume de bières
 -- vendus est d'au moins 200 litres pour toutes les années
 
+SELECT id_article, article_name
+FROM article a
+    JOIN sale USING (id_article)
+GROUP BY id_article
+HAVING NOT EXISTS (
+    SELECT SUM(quantity * volume) / 100 AS total_litres
+    FROM article
+        JOIN sale USING (id_article)
+        JOIN ticket USING (id_ticket)
+    WHERE id_article = a.id_article
+    GROUP BY YEAR(ticket_date)
+    HAVING total_litres < 200
+) 
+ORDER BY id_article;
 
+-------------- C'était pas facile ----------------------
+
+SELECT id_article, article_name
+FROM article a
+WHERE 200 < ALL (
+    SELECT SUM(quantity * volume) / 100 AS total_litres
+    FROM article
+        JOIN sale USING (id_article)
+        JOIN ticket USING (id_ticket)
+    WHERE id_article = a.id_article
+    GROUP BY YEAR(ticket_date)
+) 
+ORDER BY id_article;
+
+--------------------------------------------------------
+
+SELECT YEAR(ticket_date) AS year_, id_article, article_name, SUM(quantity * volume) / 100 AS total_litres
+FROM article
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+GROUP BY id_article, year_
+HAVING total_litres >= 200
+ORDER BY id_article, year_;
+
+SELECT YEAR(ticket_date) AS year_, id_article, article_name, SUM(quantity * volume) / 100 AS total_litres
+FROM article
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+WHERE id_article = 14
+GROUP BY year_;
+
+-- HAVING total_litres > 200
 
 -- 6/ Récupérer pour chaque pays la ou les marques de bière dont le degrès d'alcool moyen est le plus élevé en affichant le degré d'alcool moyen
 
