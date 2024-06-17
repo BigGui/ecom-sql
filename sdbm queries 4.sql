@@ -166,6 +166,35 @@ HAVING average_alcohol = (
 
 -- 7/ Donner pour chaque type de bière, la bière la plus vendue et la bière la moins vendue en 2016
 
+--create a view conatin the id_type, id_article and the sum  
+CREATE VIEW type_article_quantity_2016 AS
+SELECT  id_article, id_type ,sum(quantity) AS sum
+FROM type JOIN article USING(id_type) 
+JOIN sale USING (id_article) JOIN ticket USING (id_ticket)
+WHERE YEAR(ticket_date) = 2016
+GROUP BY id_article;
+
+
+(SELECT type_name, article_name, 'best seller' AS seller
+FROM type_article_quantity_2016 s JOIN article USING (id_article) JOIN type ON s.id_type = type.id_type
+WHERE sum >= all (
+    SELECT sum 
+from type_article_quantity_2016 
+WHERE id_type = s.id_type )) 
+UNION 
+(SELECT type_name, article_name, 'worst seller' AS seller
+FROM type_article_quantity_2016 s JOIN article USING (id_article) JOIN type ON s.id_type = type.id_type
+WHERE sum <= all (
+    SELECT sum 
+from type_article_quantity_2016 
+WHERE id_type = s.id_type )) 
+ORDER BY  type_name;
+
+
+
+
+
+
 
 
 -- 8/ Donner pour toutes les couleurs de bières la plus vendue pour chacune des années 2015, 2016 et 2017 
