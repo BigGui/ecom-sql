@@ -169,36 +169,57 @@ HAVING average_alcohol = (
 --create a view conatin the id_type, id_article and the sum  
 CREATE VIEW type_article_quantity_2016 AS
 SELECT  id_article, id_type ,sum(quantity) AS sum
-FROM type JOIN article USING(id_type) 
-JOIN sale USING (id_article) JOIN ticket USING (id_ticket)
+FROM article
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
 WHERE YEAR(ticket_date) = 2016
 GROUP BY id_article;
 
 
-(SELECT type_name, article_name, 'best seller' AS seller
-FROM type_article_quantity_2016 s JOIN article USING (id_article) JOIN type ON s.id_type = type.id_type
-WHERE sum >= all (
-    SELECT sum 
-from type_article_quantity_2016 
-WHERE id_type = s.id_type )) 
+(
+    SELECT type_name, article_name, 'best seller' AS seller
+    FROM type_article_quantity_2016 s
+        JOIN article USING (id_article)
+        JOIN type ON s.id_type = type.id_type
+    WHERE sum >= all (
+        SELECT sum 
+        FROM type_article_quantity_2016 
+        WHERE id_type = s.id_type
+    )
+) 
 UNION 
-(SELECT type_name, article_name, 'worst seller' AS seller
-FROM type_article_quantity_2016 s JOIN article USING (id_article) JOIN type ON s.id_type = type.id_type
-WHERE sum <= all (
-    SELECT sum 
-from type_article_quantity_2016 
-WHERE id_type = s.id_type )) 
+(
+    SELECT type_name, article_name, 'worst seller' AS seller
+    FROM type_article_quantity_2016 s
+        JOIN article USING (id_article)
+        JOIN type ON s.id_type = type.id_type
+    WHERE sum <= all (
+        SELECT sum 
+        from type_article_quantity_2016 
+        WHERE id_type = s.id_type
+    )
+) 
 ORDER BY  type_name;
-
-
-
-
-
-
 
 
 -- 8/ Donner pour toutes les couleurs de bières la plus vendue pour chacune des années 2015, 2016 et 2017 
 
+SELECT id_color AS color_id, color_name, YEAR(ticket_date) AS years, article_name, SUM(quantity) AS sum
+FROM article
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+    JOIN color USING (id_color)
+WHERE YEAR(ticket_date) IN (2015, 2016, 2017)
+GROUP BY id_article, years
+HAVING sum >= ALL (
+    SELECT SUM(quantity) AS sum
+    FROM article
+        JOIN sale USING (id_article)
+        JOIN ticket USING (id_ticket)
+    WHERE YEAR(ticket_date) = years AND id_color = color_id
+    GROUP BY id_article
+)
+ORDER BY color_id, years;
 
 
 -- 9/ Lister les marques de bières dont le volume total vendu (en litres) en 2015 est supérieur à celui de Heineken.
