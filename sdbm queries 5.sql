@@ -59,7 +59,9 @@ ORDER BY years;
 
 -- 4/ Automatiser la mise à jour de la date d'un ticket à la date du jour à chaque ajout d'une bière à celui-ci.
 
-
+CREATE TRIGGER after_insert_sale AFTER INSERT ON sale
+FOR EACH ROW UPDATE ticket SET ticket_date = CURRENT_DATE()
+WHERE id_ticket = NEW.id_ticket;
 
 -- 5/ Donnez la liste des marques de bière dont au moins une bière a été vendu à plus de 500 unitées en 2016
 
