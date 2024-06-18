@@ -262,3 +262,14 @@ HAVING volume_total > (
 )
 
 -- 10/ Lister les marques de bières dont le volume total vendu (en litres) est supérieur à celui de Heineken pour chaque année entre 2015 et 2017.
+
+SELECT brand_name
+FROM  brand_volume_years b
+WHERE years IN (2015, 2016, 2017) AND volume_total > 
+(
+    SELECT volume_total
+    FROM  brand_volume_years
+    WHERE years = b.years AND brand_name = "Heineken" 
+)
+GROUP BY brand_name
+HAVING COUNT(DISTINCT years) = 3;
