@@ -39,6 +39,22 @@ CALL get_beer_quantity_per_day ("2017-12-31");
 
 -- 3/ Donner pour chaque année la ou les marques ayant vendues le plus gros volume de bière (en litres)
 
+-- SELECT id_brand, brand_name, YEAR(ticket_date) AS years, SUM(quantity * volume)  / 100 AS total_vol
+-- FROM article
+--     JOIN sale USING (id_article)
+--     JOIN ticket USING (id_ticket)
+--     JOIN brand USING (id_brand)
+-- GROUP BY id_brand, years
+-- ORDER BY id_brand;
+
+SELECT brand_name, years
+FROM brand_volume_years b
+WHERE volume_total >= ALL (
+    SELECT volume_total
+    FROM brand_volume_years
+    WHERE years = b.years
+)
+ORDER BY years;
 
 
 -- 4/ Automatiser la mise à jour de la date d'un ticket à la date du jour à chaque ajout d'une bière à celui-ci.
