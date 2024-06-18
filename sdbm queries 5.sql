@@ -11,7 +11,7 @@ FROM maker
     JOIN ticket USING (id_ticket)
     JOIN type USING (id_type)
 WHERE YEAR(ticket_date) = 2016
-GROUP BY id_maker, id_type
+GROUP BY id_maker, id_type;
 
 SELECT maker_name
 FROM type_name_by_maker_2016 t
@@ -19,10 +19,23 @@ WHERE type_name = "abbaye" AND total >= ALL (
     SELECT total
     FROM type_name_by_maker_2016
     WHERE maker_name = t.maker_name
-)
+);
+
+
 -- 2/ Automatiser le calcul de la quantité total de bière vendu en nombre de bière pour un jour donné.
 
 
+------------ CREATE PROCEDURE ------------------------
+CREATE PROCEDURE get_beer_quantity_per_day (IN d DATE)
+    SELECT DATE_FORMAT(ticket_date, "%Y-%m-%d") AS date_, SUM(quantity) AS total_sold
+    FROM ticket
+        JOIN sale USING (id_ticket)
+        WHERE ticket_date = d
+        GROUP BY date_;
+
+
+---------------- CALL PROCEDURE ------------------------
+CALL get_beer_quantity_per_day ("2017-12-31");
 
 -- 3/ Donner pour chaque année la ou les marques ayant vendues le plus gros volume de bière (en litres)
 
@@ -32,7 +45,7 @@ WHERE type_name = "abbaye" AND total >= ALL (
 
 
 
--- 5/ Donnez la liste des marques de bière dont au moins une bière a vendu plus de 500 unitées en 2016
+-- 5/ Donnez la liste des marques de bière dont au moins une bière a été vendu à plus de 500 unitées en 2016
 
 
 
