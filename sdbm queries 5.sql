@@ -1,9 +1,26 @@
 
 -- 1/ Donner la liste des fabriquants dont le type de bière les plus vendues en 2016 sont les abbayes.
 
+create VIEW type_name_by_maker_2016 AS
 
+SELECT maker_name, SUM(quantity) AS total, type_name
+FROM maker
+    JOIN brand USING (id_maker)
+    JOIN article USING (id_brand)
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+    JOIN type USING (id_type)
+WHERE YEAR(ticket_date) = 2016
+GROUP BY id_maker, id_type
 
--- 2/ Automatiser le calcul de la quantité total de bière vendu en nombre de bière. pour un jour donné.
+SELECT maker_name
+FROM type_name_by_maker_2016 t
+WHERE type_name = "abbaye" AND total >= ALL (
+    SELECT total
+    FROM type_name_by_maker_2016
+    WHERE maker_name = t.maker_name
+)
+-- 2/ Automatiser le calcul de la quantité total de bière vendu en nombre de bière pour un jour donné.
 
 
 
