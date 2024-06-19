@@ -6,8 +6,8 @@
     -- Si le volume total vendu d'une marque atteint 20 hectolitres, le fabricant gagne 40 points par hectolitre intégralement vendu.
 
 -- En plus de ces points, les fabricants touchent un bonus de points s'ils ont vendu (toutes marques confondues) des bières de certains types : 
-    -- Plus de 50 litres de bière de type Trappiste, 300 points ;
-    -- Plus de 25 litres de bière de type Bière de Saison, 200 points ;
-    -- Plus de 15 litres de bière de type Stout, 100 points ;
+    -- Plus de 2000 litres de bière de type Trappiste, 300 points ;
+    -- Plus de 1500 litres de bière de type Bière de Saison, 200 points ;
+    -- Plus de 1000 litres de bière de type Stout, 100 points ;
 
 -- Calculer le nombre de points de fidélités gagnés par chaque fabricant pour chacune des années écoulées.
