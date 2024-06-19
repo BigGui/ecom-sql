@@ -125,7 +125,22 @@ WHERE 500 < ANY (
 
 -- 6/ Automatiser le fait de pouvoir augmenter ou diminuer les prix de toutes les bières d'une même marque d'un certain pourcentage.
 
+CREATE PROCEDURE modify_price_by_brand(IN percentage INT, IN this_id_brand INT)
+UPDATE article 
+SET purchase_price = purchase_price * (1 + percentage / 100)
+WHERE id_brand = this_id_brand;
 
+
+
+SELECT article_name, purchase_price
+FROM article
+WHERE id_brand = 1;
+
+CALL modify_price_by_brand(10, 1);
+
+SELECT article_name, purchase_price
+FROM article
+WHERE id_brand = 1;
 
 -- 7/ Donnez pour chaque type de bière le pourcentage de répartition par continent (en nb d'article)
 
