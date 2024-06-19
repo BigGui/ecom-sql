@@ -65,6 +65,62 @@ WHERE id_ticket = NEW.id_ticket;
 
 -- 5/ Donnez la liste des marques de bière dont au moins une bière a été vendu à plus de 500 unitées en 2016
 
+CREATE VIEW sales_by_article_per_years AS
+SELECT YEAR(ticket_date) AS years, id_brand, brand_name, id_article, article_name, SUM(quantity) AS total_sold
+FROM brand
+    JOIN article USING (id_brand)
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+GROUP BY id_article, id_brand, years;
+
+SELECT brand_name
+FROM sales_by_article_per_years
+WHERE years = 2016 AND total_sold > 500
+GROUP BY brand_name;
+
+
+SELECT brand_name
+FROM brand
+	JOIN article USING (id_brand)
+WHERE article_name IN (
+    SELECT article_name
+    FROM article
+        JOIN sale USING (id_article)
+        JOIN ticket USING (id_ticket)
+    WHERE YEAR(ticket_date) = 2016
+    GROUP BY id_article
+    HAVING SUM(quantity) > 500
+)
+GROUP BY id_brand
+ORDER BY brand_name ASC; 
+
+SELECT
+    brand_name
+FROM
+    brand
+    JOIN article USING(id_brand)
+    JOIN sale USING(id_article)
+    JOIN ticket USING (id_ticket)
+WHERE
+    YEAR(ticket_date) = 2016
+GROUP BY
+    id_brand,
+    id_article
+HAVING
+    SUM(quantity) > 500;
+
+
+SELECT brand_name
+FROM brand b
+WHERE 500 < ANY (
+    SELECT SUM(quantity)
+    FROM sale
+        JOIN ticket USING (id_ticket)
+        JOIN article a USING(id_article)
+    WHERE a.id_brand = b.id_brand
+        AND YEAR(ticket_date) = 2016
+    GROUP BY id_article
+);
 
 
 -- 6/ Automatiser le fait de pouvoir augmenter ou diminuer les prix de toutes les bières d'une même marque d'un certain pourcentage.
