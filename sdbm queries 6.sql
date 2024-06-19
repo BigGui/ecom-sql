@@ -41,13 +41,21 @@ FROM maker
 GROUP BY id_maker, id_brand, id_type, year_
 ORDER BY id_maker, id_brand, year_;
 
-
-SELECT brand_name, year_,
-    FLOOR(SUM(
-        CASE
-            WHEN volume >= 1 THEN volume * 10
-            ELSE 0
-        END
-    )) AS loyalty_points
+CREATE VIEW loyalty_by_brand AS
+SELECT maker_name, brand_name, year_, SUM(volume),
+    CASE
+        WHEN SUM(volume) >= 20 THEN FLOOR(SUM(volume)) * 40
+        WHEN SUM(volume) >= 10 THEN FLOOR(SUM(volume)) * 30
+        WHEN SUM(volume) >= 5 THEN FLOOR(SUM(volume)) * 20
+        WHEN SUM(volume) >= 1 THEN FLOOR(SUM(volume)) * 10
+        ELSE 0
+    END AS loyalty_points
 FROM volume_by_makers_by_types_years
-GROUP BY brand_name, year_;
+GROUP BY maker_name, brand_name, year_
+ORDER BY maker_name, year_;
+
+
+SELECT maker_name, year_, SUM(loyalty_points) AS loyalty_points_base
+FROM loyalty_by_brand
+GROUP BY maker_name, year_
+ORDER BY maker_name, year_;
