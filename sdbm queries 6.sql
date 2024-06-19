@@ -28,3 +28,26 @@
         -- Pour plus de 1000 litres de bière de type Stout, 100 points ;
 
 -- Calculer le nombre de points de fidélités gagnés par chaque fabricant pour chacune des années écoulées.
+
+
+CREATE VIEW volume_by_makers_by_types_years AS
+SELECT maker_name, brand_name, (SUM(volume * quantity) / 10000) AS volume, type_name, YEAR(ticket_date) AS year_
+FROM maker
+    JOIN brand USING (id_maker)
+    JOIN article USING (id_brand)
+    JOIN sale USING (id_article)
+    JOIN ticket USING (id_ticket)
+    JOIN type USING (id_type)
+GROUP BY id_maker, id_brand, id_type, year_
+ORDER BY id_maker, id_brand, year_;
+
+
+SELECT brand_name, year_,
+    FLOOR(SUM(
+        CASE
+            WHEN volume >= 1 THEN volume * 10
+            ELSE 0
+        END
+    )) AS loyalty_points
+FROM volume_by_makers_by_types_years
+GROUP BY brand_name, year_;
