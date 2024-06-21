@@ -103,6 +103,27 @@ FROM volume_by_makers_by_types_years
 GROUP BY maker_name, type_name, year_
 ORDER BY maker_name, year_;
 
+SELECT maker_name, year_, SUM(loyalty_points_base)
+
+FROM (
+    (
+        SELECT maker_name, year_, SUM(loyalty_points) AS loyalty_points_base
+        FROM loyalty_by_brand
+        GROUP BY maker_name, year_
+        ORDER BY maker_name, year_
+    )
+    UNION ALL
+    (
+        SELECT maker_name, year_, SUM(loyalty_bonus_points) AS loyalty_points_bonus
+        FROM loyalty_by_type
+        GROUP BY maker_name, year_
+        ORDER BY maker_name, year_
+    )
+    ) AS total_loyalty_points
+GROUP BY maker_name, year_
+ORDER BY maker_name, year_;
+
+
 
 
 -- Calculer le nombre de points de fidélités gagnés par chaque fabricant pour chacune des années écoulées.
