@@ -134,3 +134,8 @@ WHERE total_points >= ALL (
     WHERE year_ = l.year_
 ) AND total_points > 0;
 -- Voilà, c'est fini.
+
+SELECT maker_name, SUM(total_points) AS total
+FROM loyalty_points_by_year_by_maker
+GROUP BY maker_name
+ORDER BY total DESC;
