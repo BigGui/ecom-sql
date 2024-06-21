@@ -84,6 +84,43 @@ ORDER BY maker_name, year_;
 
 CREATE VIEW loyalty_by_type AS
 SELECT maker_name, type_name, year_, SUM(volume),
+
+    -- CASE
+    --     WHEN year_ = 2014
+    --     THEN
+    --         CASE
+    --             WHEN SUM(volume) > 3 AND type_name = 'Abbaye' THEN 300
+    --             WHEN SUM(volume) > 2 AND type_name = 'Pils et Lager' THEN 200
+    --             WHEN SUM(volume) > 1 AND type_name = 'Stout' THEN 100
+    --             ELSE 0
+    --         END
+    --     WHEN year_ = 2015
+    --     THEN
+    --         CASE
+    --             WHEN SUM(volume) > 15 AND type_name = 'Abbaye' THEN 300
+    --             WHEN SUM(volume) > 10 AND type_name = 'Pils et Lager' THEN 200
+    --             WHEN SUM(volume) > 5 AND type_name = 'Lambic' THEN 100
+    --             ELSE 0
+    --         END
+    --     WHEN year_ = 2016
+    --     THEN
+    --         CASE
+    --             WHEN SUM(volume) > 5 AND type_name = 'Trappiste' THEN 300
+    --             WHEN SUM(volume) > 3 AND type_name = 'Bière Aromatisée' THEN 200
+    --             WHEN SUM(volume) > 2 AND type_name = 'Ale' THEN 100
+    --             ELSE 0
+    --         END
+    --     WHEN year_ = 2017
+    --     THEN
+    --         CASE
+    --             WHEN SUM(volume) > 20 AND type_name = 'Trappiste' THEN 300
+    --             WHEN SUM(volume) > 15 AND type_name = 'Bière de Saison' THEN 200
+    --             WHEN SUM(volume) > 10 AND type_name = 'Stout' THEN 100
+    --             ELSE 0
+    --         END
+    --     ELSE 0
+    -- END AS loyalty_bonus_points
+
     CASE
         WHEN SUM(volume) > 3 AND type_name = 'Abbaye' AND year_ = 2014 THEN 300
         WHEN SUM(volume) > 2 AND type_name = 'Pils et Lager' AND year_ = 2014 THEN 200
@@ -99,6 +136,7 @@ SELECT maker_name, type_name, year_, SUM(volume),
         WHEN SUM(volume) > 10 AND type_name = 'Stout' AND year_ = 2017 THEN 100
         ELSE 0
     END AS loyalty_bonus_points
+
 FROM volume_by_makers_by_types_years
 GROUP BY maker_name, type_name, year_
 ORDER BY maker_name, year_;
@@ -139,3 +177,14 @@ SELECT maker_name, SUM(total_points) AS total
 FROM loyalty_points_by_year_by_maker
 GROUP BY maker_name
 ORDER BY total DESC;
+
+
+-- Table contenant les règles de calcul des points bonus
+
+CREATE TABLE loyalty_bonus_rules (
+    id_type INT UNSIGNED NOT NULL,
+    goal INT UNSIGNED NOT NULL,
+    year SMALLINT UNSIGNED NOT NULL,
+    points INT UNSIGNED NOT NULL,
+    PRIMARY KEY (id_type, year)
+);
